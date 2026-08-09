@@ -11,7 +11,3 @@ The project does the following:
 Please:
 1. draft a step-by-step development plan in a .md file, with todo items defined.
 2. Start with the first step: model files parsing.
-
-$env:LLM_API_URL="https://openrouter.ai/api/v1"
-$env:LLM_API_KEY="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"
-$env:LLM_MODEL_NAME="google/gemma-3-27b-it:free"

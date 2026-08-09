@@ -8,7 +8,7 @@ thinking models and the LLM API.
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 from src.core.model_parser import ModelParser, ThinkingModel
-from src.core.llm_client import LLMClient
+from src.core.llm_client import get_llm_client, BaseLLMClient
 import logging
 import time
 
@@ -36,7 +36,7 @@ class QueryProcessor:
     - Parsing and validating LLM responses
     """
     
-    def __init__(self, model_parser: ModelParser, llm_client: LLMClient):
+    def __init__(self, model_parser: ModelParser, llm_client: BaseLLMClient):
         self.model_parser = model_parser
         self.llm_client = llm_client
         
