@@ -18,6 +18,8 @@ class Config:
     # LLM API Settings
     llm_api_url: Optional[str] = None
     llm_api_key: Optional[str] = None
+    gemini_api_key: Optional[str] = None
+    llm_provider: str = "openai"
     llm_model_name: str = "gpt-3.5-turbo"
     llm_temperature: float = 0.7
     llm_max_tokens: int = 2000
@@ -53,6 +55,8 @@ class Config:
             # LLM API Settings
             llm_api_url=os.getenv('LLM_API_URL'),
             llm_api_key=os.getenv('LLM_API_KEY'),
+            gemini_api_key=os.getenv('GEMINI_API_KEY'),
+            llm_provider=os.getenv('LLM_PROVIDER', 'openai'),
             llm_model_name=os.getenv('LLM_MODEL_NAME', 'gpt-3.5-turbo'),
             llm_temperature=float(os.getenv('LLM_TEMPERATURE', '0.7')),
             llm_max_tokens=int(os.getenv('LLM_MAX_TOKENS', '2000')),

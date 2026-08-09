@@ -29,7 +29,7 @@ from rich.markdown import Markdown
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from core.model_parser import ModelParser
-from core.llm_client import LLMClient, LLMConfig
+from core.llm_client import get_llm_client
 from core.query_processor import QueryProcessor, QueryResult
 
 # Initialize Rich console for pretty output
@@ -64,44 +64,27 @@ class CLIConfig:
 def setup_processor(config: CLIConfig) -> Optional[QueryProcessor]:
     """Initialize the query processor with given configuration"""
     try:
-        # Load models
         if config.verbose:
             console.print(f"[blue]Loading thinking models from {config.models_dir}...[/blue]")
-        
+
         model_parser = ModelParser(config.models_dir)
         models = model_parser.load_all_models()
-        
+
         if config.verbose:
             console.print(f"[green]✓ Loaded {len(models)} thinking models[/green]")
-        
-        # Setup LLM client
-        if not config.api_url:
-            console.print("[red]Error: LLM_API_URL environment variable must be set[/red]")
-            return None
-        
-        llm_config = LLMConfig(
-            api_url=config.api_url,
-            api_key=config.api_key,
-            model_name=config.model_name,
-            temperature=config.temperature,
-            max_tokens=config.max_tokens
-        )
-        
-        llm_client = LLMClient(llm_config)
-        
-        # Test connection if in verbose mode
+
+        # Get LLM client from factory
+        llm_client = get_llm_client()
+
         if config.verbose:
             console.print("[blue]Testing LLM connection...[/blue]")
             if llm_client.test_connection():
                 console.print("[green]✓ LLM connection successful[/green]")
             else:
                 console.print("[yellow]⚠ LLM connection test failed, but continuing anyway[/yellow]")
-        
-        # Create query processor
-        processor = QueryProcessor(model_parser, llm_client)
-        
-        return processor
-        
+
+        return QueryProcessor(model_parser, llm_client)
+
     except Exception as e:
         console.print(f"[red]Error initializing processor: {str(e)}[/red]")
         return None

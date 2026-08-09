@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 # Add parent directories to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from core.model_parser import ModelParser
-from core.llm_client import LLMClient, LLMConfig
+from core.llm_client import get_llm_client
 from core.query_processor import QueryProcessor, QueryResult
 
 # Set up logging
@@ -133,10 +133,10 @@ async def startup_event():
         
         # Initialize LLM client (if configured)
         api_url = os.getenv('LLM_API_URL')
-        if api_url:
-            llm_config = LLMConfig.from_env()
-            llm_client = LLMClient(llm_config)
-            
+        gemini_api_key = os.getenv('GEMINI_API_KEY')
+        if api_url or gemini_api_key:
+            llm_client = get_llm_client()
+
             # Initialize query processor
             query_processor = QueryProcessor(model_parser, llm_client)
             logger.info("Query processor initialized with LLM client")

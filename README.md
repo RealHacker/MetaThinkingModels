@@ -45,7 +45,7 @@ This two-phase approach ensures that the solutions are not just generic LLM resp
 
 - **140 Thinking Models**: A comprehensive library of thinking models, from SWOT analysis to second-order thinking.
 - **Two-Phase Query Processing**: Enhances LLM responses with structured problem-solving methodologies.
-- **OpenAI-Compatible API**: Integrates with any OpenAI-compatible LLM API.
+- **Multi-LLM-Backend Support**: Integrates with multiple LLM providers, including OpenAI and Google Gemini.
 - **CLI & Web Interfaces**: Access the system through a command-line interface or a modern web application.
 - **Real-time Updates**: Get live feedback during query processing via WebSockets.
 - **Model Browser**: Explore, search, and filter thinking models through the web UI.
@@ -60,7 +60,7 @@ This two-phase approach ensures that the solutions are not just generic LLM resp
 
 - Python 3.8+
 - `pip` for package management
-- An OpenAI-compatible LLM API endpoint
+- An API endpoint and key for an OpenAI-compatible service or Google Gemini.
 
 ### Installation
 
@@ -79,15 +79,31 @@ This two-phase approach ensures that the solutions are not just generic LLM resp
 
 3. **Configure your LLM API:**
 
-   Create a `.env` file in the project root and add your API credentials:
+   Create a `.env` file in the project root. Below are examples for configuring OpenAI and Gemini providers.
 
+   **For OpenAI-Compatible APIs:**
    ```env
+   # Set the provider to openai (this is the default)
+   LLM_PROVIDER=openai
+
    # Required
    LLM_API_URL=https://your-llm-api-endpoint.com
 
    # Optional
    LLM_API_KEY=your-api-key
    LLM_MODEL_NAME=gpt-3.5-turbo
+   ```
+
+   **For Google Gemini:**
+   ```env
+   # Set the provider to gemini
+   LLM_PROVIDER=gemini
+
+   # Required - your Gemini API key
+   GEMINI_API_KEY=your-gemini-api-key
+
+   # Optional - specify a Gemini model
+   LLM_MODEL_NAME=gemini-1.5-flash
    ```
 
 ---
